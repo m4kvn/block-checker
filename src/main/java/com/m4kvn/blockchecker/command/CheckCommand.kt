@@ -9,6 +9,7 @@ import org.spongepowered.api.command.spec.CommandExecutor
 import org.spongepowered.api.command.spec.CommandSpec
 import org.spongepowered.api.data.type.HandTypes
 import org.spongepowered.api.entity.living.player.Player
+import org.spongepowered.api.item.inventory.ItemStack
 import org.spongepowered.api.text.Text
 
 class CheckCommand : CommandExecutor, KoinComponent {
@@ -29,9 +30,8 @@ class CheckCommand : CommandExecutor, KoinComponent {
     override fun execute(src: CommandSource, args: CommandContext): CommandResult {
         if (src !is Player) return CommandResult.empty()
 
-        src.getItemInHand(HandTypes.MAIN_HAND).ifPresent { itemStack ->
-            src.sendMessage(Text.builder("$itemStack").build())
-            return@ifPresent
+        src.getItemInHand(HandTypes.MAIN_HAND).ifPresent { itemStack: ItemStack ->
+            src.sendMessage(Text.builder(itemStack.type.id).build())
         }
         return CommandResult.success()
     }

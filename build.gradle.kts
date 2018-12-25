@@ -37,3 +37,11 @@ val compileKotlin: KotlinCompile by tasks
 compileKotlin.kotlinOptions {
     jvmTarget = "1.8"
 }
+
+val copyToServer by tasks.creating(Copy::class.java) {
+    from("build/libs/block-checker-$version.jar")
+    into("server/data/mods/")
+}
+
+val build by tasks
+build.finalizedBy(copyToServer)
